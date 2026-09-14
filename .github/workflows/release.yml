@@ -1,0 +1,41 @@
+name: Build and release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build app and installer
+        shell: powershell
+        run: .\release.ps1
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AKMasterSocical-release
+          path: dist/release/*
+
+      - name: Publish GitHub release
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: powershell
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $setup = (Get-ChildItem dist/release/AKMasterSocical-Setup-*.exe | Select-Object -First 1).FullName
+          gh release create $env:GITHUB_REF_NAME `
+            dist/release/AKMasterSocical-Clean.zip `
+            dist/release/AKMasterSocical-Clean.zip.sha256 `
+            $setup `
+            --title "AKMasterSocical $env:GITHUB_REF_NAME" `
+            --generate-notes

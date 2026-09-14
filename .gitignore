@@ -1,0 +1,7 @@
+reference_extracted/
+*.nupkg
+chromedriver-*.zip
+reference_icon.png
+dist/
+*.user
+*.suo
