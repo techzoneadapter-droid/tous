@@ -33,9 +33,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           $setup = (Get-ChildItem dist/release/AKMasterSocical-Setup-*.exe | Select-Object -First 1).FullName
-          gh release create $env:GITHUB_REF_NAME `
-            dist/release/AKMasterSocical-Clean.zip `
-            dist/release/AKMasterSocical-Clean.zip.sha256 `
-            $setup `
-            --title "AKMasterSocical $env:GITHUB_REF_NAME" `
-            --generate-notes
+          $assets = @(
+            'dist/release/AKMasterSocical-Clean.zip',
+            'dist/release/AKMasterSocical-Clean.zip.sha256',
+            $setup
+          )
+          gh release view $env:GITHUB_REF_NAME 2>$null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $env:GITHUB_REF_NAME $assets --clobber
+          } else {
+            gh release create $env:GITHUB_REF_NAME $assets `
+              --title "AKMasterSocical $env:GITHUB_REF_NAME" `
+              --generate-notes
+          }
