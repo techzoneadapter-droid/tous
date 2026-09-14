@@ -14,6 +14,7 @@ $iscc = $isccCandidates | Where-Object { Test-Path -LiteralPath $_ } | Select-Ob
 & (Join-Path $projectRoot 'build.ps1')
 if (-not $iscc) { throw 'Không tìm thấy Inno Setup Compiler.' }
 New-Item -ItemType Directory -Path $releaseDir -Force | Out-Null
+Get-ChildItem -LiteralPath $releaseDir -Filter 'AKMasterSocical-Setup-*.exe' -File -ErrorAction SilentlyContinue | Remove-Item -Force
 Compress-Archive -LiteralPath $dist -DestinationPath $zip -CompressionLevel Optimal -Force
 $hash = (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash
 "$hash  AKMasterSocical-Clean.zip" | Set-Content -LiteralPath $hashFile -Encoding ASCII

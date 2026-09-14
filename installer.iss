@@ -1,5 +1,5 @@
 #define MyAppName "AKMasterSocical"
-#define MyAppVersion "1.0.0.18"
+#define MyAppVersion "1.0.0.19"
 #define MyAppPublisher "techzoneadapter-droid"
 #define MyAppExeName "AKMasterSocical.exe"
 

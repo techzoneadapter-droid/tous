@@ -15,8 +15,8 @@ using System.Windows.Forms;
 
 [assembly: AssemblyTitle("AKMasterSocical Updater")]
 [assembly: AssemblyProduct("AKMasterSocical Clean Edition")]
-[assembly: AssemblyVersion("1.0.0.18")]
-[assembly: AssemblyFileVersion("1.0.0.18")]
+[assembly: AssemblyVersion("1.0.0.19")]
+[assembly: AssemblyFileVersion("1.0.0.19")]
 
 namespace AKMasterSocicalClean
 {
